@@ -1,15 +1,12 @@
 import os
-from cherrypy import wsgiserver
+import cherrypy
 
 class HelloWorld(object):
     def index(self):
         return "Hello World!"
     index.exposed = True
 
-server = wsgiserver.CherryPyWSGIServer(
-            (os.environ.get('OPENSHIFT_PYTHON_IP', '127.0.0.1'), 
-             os.environ.get('OPENSHIFT_PYTHON_PORT', 8080)), 
-             HelloWorld, 
-             server_name=os.environ.get('OPENSHIFT_APP_DNS', 'cherrypy.example.com'))
 
-server.start()
+cherrypy.server.socket_port = os.environ.get('OPENSHIFT_PYTHON_PORT', 8080)
+cherrypy.server.socket_host = os.environ.get('OPENSHIFT_PYTHON_IP', '127.0.0.1')
+cherrypy.quickstart(HelloWorld())
