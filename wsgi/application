@@ -1,12 +1,20 @@
-import os
+import sys
+sys.stdout = sys.stderr
+
+import atexit
+import threading
 import cherrypy
 
-class HelloWorld(object):
+cherrypy.config.update({'environment': 'embedded'})
+
+if cherrypy.__version__.startswith('3.0') and cherrypy.engine.state == 0:
+    cherrypy.engine.start(blocking=False)
+    atexit.register(cherrypy.engine.stop)
+
+class Root(object):
     def index(self):
-        return "Hello World!"
+        return 'Hello World!'
     index.exposed = True
 
+application = cherrypy.Application(Root(), script_name=None, config=None)
 
-cherrypy.server.socket_port = os.environ.get('OPENSHIFT_PYTHON_PORT', 8080)
-cherrypy.server.socket_host = os.environ.get('OPENSHIFT_PYTHON_IP', '127.0.0.1')
-cherrypy.quickstart(HelloWorld())
