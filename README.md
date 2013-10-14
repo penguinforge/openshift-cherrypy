@@ -22,3 +22,5 @@ This example works like most other WSGI applicaion examples by [defining CherryP
 and then defining the [mod_wsgi application](https://github.com/penguinforge/openshift-cherrypy/blob/master/wsgi/application#L19)
 
 The OpenShift `python` cartridge documentation can be [found here](https://github.com/openshift/origin-server/tree/master/cartridges/openshift-origin-cartridge-python/README.md).
+
+Credit: The magic of this example is provided by [tools.cherrypy](http://tools.cherrypy.org/wiki/ModWSGI)
