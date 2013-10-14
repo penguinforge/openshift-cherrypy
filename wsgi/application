@@ -1,7 +1,11 @@
+import os
 import cherrypy
+
 class HelloWorld(object):
     def index(self):
         return "Hello World!"
     index.exposed = True
 
+cherrypy.server.socket_port = os.environ.get('OPENSHIFT_PYTHON_IP')
+cherrypy.server.socket_host = os.environ.get('OPENSHIFT_PYTHON_PORT')
 cherrypy.quickstart(HelloWorld())
